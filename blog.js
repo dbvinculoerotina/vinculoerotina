@@ -12,11 +12,16 @@ const BLOG_CONFIG = {
   OWNER: "SEU-USUARIO-GITHUB",
   REPO: "SEU-REPOSITORIO",
   BRANCH: "main",
-  POSTS_PATH: "content/posts"
+  POSTS_PATH: ""
 };
 
+function joinPath(...parts) {
+  return parts.filter(Boolean).join('/');
+}
+
 function blogApiUrl() {
-  return `https://api.github.com/repos/${BLOG_CONFIG.OWNER}/${BLOG_CONFIG.REPO}/contents/${BLOG_CONFIG.POSTS_PATH}?ref=${BLOG_CONFIG.BRANCH}`;
+  const path = joinPath(BLOG_CONFIG.POSTS_PATH);
+  return `https://api.github.com/repos/${BLOG_CONFIG.OWNER}/${BLOG_CONFIG.REPO}/contents/${path}?ref=${BLOG_CONFIG.BRANCH}`;
 }
 
 function rawUrl(path) {
@@ -41,7 +46,7 @@ async function fetchAllPosts() {
   const jsonFiles = (Array.isArray(files) ? files : []).filter(f => f.name.endsWith('.json'));
 
   const posts = await Promise.all(jsonFiles.map(async (f) => {
-    const r = await fetch(rawUrl(`${BLOG_CONFIG.POSTS_PATH}/${f.name}`));
+    const r = await fetch(rawUrl(joinPath(BLOG_CONFIG.POSTS_PATH, f.name)));
     const data = await r.json();
     data.slug = f.name.replace(/\.json$/, '');
     return data;
@@ -61,7 +66,7 @@ async function renderBlogList() {
         O blog ainda não está conectado ao GitHub.<br><br>
         Abra o arquivo <code>blog.js</code> e preencha <code>OWNER</code> e <code>REPO</code>
         com os dados do seu repositório — depois disso os textos publicados no
-        painel (<a href="admin/">/admin</a>) aparecem aqui automaticamente.
+        painel (<a href="painel.html">/painel.html</a>) aparecem aqui automaticamente.
       </div>`;
     return;
   }
@@ -113,7 +118,7 @@ async function renderSinglePost() {
   }
 
   try {
-    const res = await fetch(rawUrl(`${BLOG_CONFIG.POSTS_PATH}/${slug}.json`));
+    const res = await fetch(rawUrl(joinPath(BLOG_CONFIG.POSTS_PATH, `${slug}.json`)));
     if (!res.ok) throw new Error('not found');
     const post = await res.json();
 
