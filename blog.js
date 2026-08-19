@@ -9,8 +9,8 @@
 REPO: "vinculoerotina",
    ========================================================================== */
 const BLOG_CONFIG = {
-  OWNER: "SEU-USUARIO-GITHUB",
-  REPO: "SEU-REPOSITORIO",
+  OWNER: "dbvinculoerotina",
+REPO: "vinculoerotina",
   BRANCH: "main",
   POSTS_PATH: ""
 };
