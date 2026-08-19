@@ -5,8 +5,8 @@
    Exemplo: se o link do seu repositório for
    https://github.com/duda-bincoleto/site-duda
    então:
-     OWNER  = "duda-bincoleto"
-     REPO   = "site-duda"
+     OWNER: "dbvinculoerotina",
+REPO: "vinculoerotina",
    ========================================================================== */
 const BLOG_CONFIG = {
   OWNER: "SEU-USUARIO-GITHUB",
