@@ -1,0 +1,26 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Depois de conectar o site ao Netlify e ativar o "Identity" + "Git Gateway",
+# este painel passa a funcionar em: SEUSITE.netlify.app/painel.html
+
+media_folder: ""
+public_folder: "/"
+
+collections:
+  - name: "posts"
+    label: "Textos do Blog"
+    folder: "posts"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    identifier_field: title
+    summary: "{{title}} ({{date}})"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Data", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Resumo curto (aparece na listagem)", name: "excerpt", widget: "text" }
+      - { label: "Imagem de capa", name: "cover", widget: "image", required: false }
+      - { label: "Texto", name: "body", widget: "markdown" }
